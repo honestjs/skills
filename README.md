@@ -12,6 +12,5 @@ Install the Honest skill with the skills CLI (Bun):
 bunx skills add https://github.com/honestjs/skills --skill honest
 ```
 
-This installs the `honest` skill into your Cursor skills directory. The agent
-will then have access to it when working with Honest, HonestJS, or related
-packages.
+This installs the `honest` skill. The agent will then have access to it when
+working with Honest, HonestJS, or related packages.
