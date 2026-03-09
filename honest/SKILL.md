@@ -1,6 +1,6 @@
 ---
 name: honest
-description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding, Application.create, decorators, routing, DI, plugins, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, and http-essentials.
+description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding, Application.create, decorators, routing, DI, application context (registry), plugins, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, and http-essentials.
 ---
 
 # Honest Skill
@@ -72,6 +72,13 @@ controllers, services, modules, guards, pipes, or filters.
 - **Custom handlers:** `onError?`, `notFound?` on options.
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
+- **Application context (registry):** `app.getContext()` — app-scoped key-value
+  store for the whole app (bootstrap, services, any code with `app`). Use
+  `get<T>(key)`, `set<T>(key, value)`, `has(key)`, `delete(key)`, `keys()`.
+  Namespace keys (e.g. `app.config`, `openapi.spec`). Use for pipeline/config
+  or shared data that outlives a request. **Not** Hono request context: that is
+  per-request and injected via `@Ctx()` (request, response, env, request-scoped
+  variables).
 
 ## Modules and DI
 
