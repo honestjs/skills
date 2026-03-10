@@ -175,6 +175,26 @@ bun add @honestjs/rpc-plugin
   `@honestjs/api-docs-plugin` with `artifact: 'rpc.artifact'` (or pass a direct
   `{ routes, schemas }` artifact object).
 
+### @honestjs/api-docs-plugin
+
+```bash
+bun add @honestjs/api-docs-plugin
+```
+
+- **OpenAPI + Swagger UI** — generates OpenAPI spec from an artifact and serves
+  JSON + Swagger UI. Register: `plugins: [new ApiDocsPlugin(options)]`.
+- **Artifact source:** `artifact` is required — either a **context key** string
+  (e.g. `'rpc.artifact'` from RPC plugin) or a **direct object**
+  `{ routes: OpenApiRouteInput[], schemas: OpenApiSchemaInput[] }`. When using
+  context key, put the producer plugin (e.g. RPCPlugin) **before** ApiDocsPlugin
+  in the plugins array.
+- **Options:** `title`, `version`, `description`, `servers` (OpenAPI metadata);
+  `openApiRoute` (default `/openapi.json`), `uiRoute` (default `/docs`),
+  `uiTitle` (default `'API Docs'`), `reloadOnRequest` (default `false`).
+- **Programmatic:** `fromArtifactSync(artifact, options)` and `write(spec, path)`
+  for generating spec files; types: `OpenApiArtifactInput`, `OpenApiDocument`,
+  `OpenApiGenerationOptions`.
+
 ### @honestjs/middleware
 
 ```bash
