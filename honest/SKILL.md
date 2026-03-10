@@ -160,9 +160,12 @@ bun add @honestjs/rpc-plugin
   TypeScript client. Register: `plugins: [RPCPlugin]` or
   `plugins: [new RPCPlugin(options)]`.
 - **Options:** `controllerPattern` (glob for controller files), `tsConfigPath`,
-  `outputDir` (default `./generated/rpc`), `generateOnInit` (default `true`).
+  `outputDir` (default `./generated/rpc`), `generateOnInit` (default `true`),
+  `generators` (optional array of custom generators).
   Use `controllerPattern` if controllers live outside the default
   `src/modules/*/*.controller.ts`.
+- **Generators:** when `generators` is omitted, plugin uses built-in
+  `TypeScriptClientGenerator`; when defined, only provided generators run.
 - **Generated client:** `ApiClient` with controller-namespaced methods; call
   with `{ params?, query?, body?, headers? }`. Use
   `new ApiClient(baseUrl, { fetchFn? })` for custom fetch (testing, retries,
