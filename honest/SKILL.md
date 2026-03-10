@@ -67,8 +67,10 @@ controllers, services, modules, guards, pipes, or filters.
 - **Global components:**
   `components: { middleware?, guards?, pipes?, filters? }` — applied to all
   routes.
-- **Plugins:** `plugins?: PluginType[]` — lifecycle:
-  `beforeModulesRegistered(app, hono)`, `afterModulesRegistered(app, hono)`.
+- **Plugins:** `plugins?: PluginEntry[]` — each entry can be a plain plugin or
+  `{ plugin, preProcessors?, postProcessors? }`. Processors receive
+  `(app, hono, ctx)` (ctx = app context). Order: preProcessors →
+  `beforeModulesRegistered`; `afterModulesRegistered` → postProcessors.
 - **Custom handlers:** `onError?`, `notFound?` on options.
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
