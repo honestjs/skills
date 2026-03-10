@@ -1,6 +1,6 @@
 ---
 name: honest
-description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding, Application.create, decorators, routing, DI, application context (registry), plugins, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, and http-essentials.
+description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding, Application.create, decorators, routing, DI, application context (registry), plugins, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
 ---
 
 # Honest Skill
@@ -77,8 +77,8 @@ controllers, services, modules, guards, pipes, or filters.
 - **Application context (registry):** `app.getContext()` — app-scoped key-value
   store for the whole app (bootstrap, services, any code with `app`). Use
   `get<T>(key)`, `set<T>(key, value)`, `has(key)`, `delete(key)`, `keys()`.
-  Namespace keys (e.g. `app.config`, `openapi.spec`). Use for pipeline/config
-  or shared data that outlives a request. **Not** Hono request context: that is
+  Namespace keys (e.g. `app.config`, `rpc.artifact`, `openapi.spec`). Use for pipeline/config or
+  shared data that outlives a request. **Not** Hono request context: that is
   per-request and injected via `@Ctx()` (request, response, env, request-scoped
   variables).
 
@@ -170,6 +170,10 @@ bun add @honestjs/rpc-plugin
 - **Manual generation:** `generateOnInit: false` then
   `await rpcPlugin.analyze()` when needed. Controllers should use `@Body()`,
   `@Param()`, `@Query()` with typed DTOs/interfaces for best client inference.
+- **OpenAPI/Swagger:** RPC plugin does not generate OpenAPI specs. It publishes
+  routes/schemas artifact to app context (default key: `rpc.artifact`); use
+  `@honestjs/api-docs-plugin` with `artifact: 'rpc.artifact'` (or pass a direct
+  `{ routes, schemas }` artifact object).
 
 ### @honestjs/middleware
 
