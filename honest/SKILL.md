@@ -174,9 +174,9 @@ bun add @honestjs/rpc-plugin
   `await rpcPlugin.analyze()` when needed. Controllers should use `@Body()`,
   `@Param()`, `@Query()` with typed DTOs/interfaces for best client inference.
 - **OpenAPI/Swagger:** RPC plugin does not generate OpenAPI specs. It publishes
-  routes/schemas artifact to app context (default key: `rpc.artifact`); use
-  `@honestjs/api-docs-plugin` with `artifact: 'rpc.artifact'` (or pass a direct
-  `{ routes, schemas }` artifact object).
+  routes/schemas artifact to app context (default key: `rpc.artifact`). API Docs
+  plugin defaults to that key — use `new ApiDocsPlugin()` with RPC, or pass
+  `artifact` for a custom key or direct `{ routes, schemas }` object.
 
 ### @honestjs/api-docs-plugin
 
@@ -185,12 +185,13 @@ bun add @honestjs/api-docs-plugin
 ```
 
 - **OpenAPI + Swagger UI** — generates OpenAPI spec from an artifact and serves
-  JSON + Swagger UI. Register: `plugins: [new ApiDocsPlugin(options)]`.
-- **Artifact source:** `artifact` is required — either a **context key** string
-  (e.g. `'rpc.artifact'` from RPC plugin) or a **direct object**
-  `{ routes: OpenApiRouteInput[], schemas: OpenApiSchemaInput[] }`. When using
-  context key, put the producer plugin (e.g. RPCPlugin) **before** ApiDocsPlugin
-  in the plugins array.
+  JSON + Swagger UI. Register: `plugins: [new ApiDocsPlugin()]` or
+  `plugins: [new ApiDocsPlugin(options)]`. With RPC, `artifact` defaults to
+  `'rpc.artifact'` so no options are needed.
+- **Artifact source:** `artifact` is optional (default: **context key**
+  `'rpc.artifact'`). Can pass another context key or a **direct object**
+  `{ routes, schemas }`. Put the producer plugin (e.g. RPCPlugin) **before**
+  ApiDocsPlugin in the plugins array when using a context key.
 - **Options:** `title`, `version`, `description`, `servers` (OpenAPI metadata);
   `openApiRoute` (default `/openapi.json`), `uiRoute` (default `/docs`),
   `uiTitle` (default `'API Docs'`), `reloadOnRequest` (default `false`).
