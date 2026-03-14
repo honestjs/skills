@@ -44,12 +44,12 @@ Always import `reflect-metadata` once before any Honest decorators. Export the
 
 ## CLI
 
-- **New project:** `honestjs new <project-name>` — options: `-t|--template`,
+- **New project:** `honestjs new <project-name>` - options: `-t|--template`,
   `-p|--package-manager`, `--typescript`, `--eslint`, `--prettier`, `--docker`,
   `--git`, `--install`, `-y|--yes`
-- **List templates:** `honestjs list` — `-j|--json`, `-c|--category`, `-t|--tag`
+- **List templates:** `honestjs list` - `-j|--json`, `-c|--category`, `-t|--tag`
 - **Info:** `honestjs info`
-- **Generate:** `honestjs generate <schematic> <name>` (alias `g`) — schematics:
+- **Generate:** `honestjs generate <schematic> <name>` (alias `g`) - schematics:
   `controller`|`c`, `service`|`s`, `module`|`m`, `view`|`v`, `middleware`|`c-m`,
   `guard`|`c-g`, `filter`|`c-f`, `pipe`|`c-p`. Options: `-p|--path`, `--flat`,
   `--skip-import`, `--export`
@@ -63,30 +63,30 @@ controllers, services, modules, guards, pipes, or filters.
   `{ app, hono }`.
 - **Routing:**
   `routing: { prefix?: string, version?: number | VERSION_NEUTRAL | number[] }`
-  — e.g. `prefix: 'api'`, `version: 1` → `/api/v1/...`.
+  - e.g. `prefix: 'api'`, `version: 1` → `/api/v1/...`.
 - **Global components:**
-  `components: { middleware?, guards?, pipes?, filters? }` — applied to all
+  `components: { middleware?, guards?, pipes?, filters? }` - applied to all
   routes.
-- **Plugins:** `plugins?: PluginEntry[]` — each entry can be a plain plugin or
+- **Plugins:** `plugins?: PluginEntry[]` - each entry can be a plain plugin or
   `{ plugin, preProcessors?, postProcessors? }`. Processors receive
   `(app, hono, ctx)` (ctx = app context). Order: preProcessors →
   `beforeModulesRegistered`; `afterModulesRegistered` → postProcessors.
 - **Custom handlers:** `onError?`, `notFound?` on options.
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
-- **Application context (registry):** `app.getContext()` — app-scoped key-value
+- **Application context (registry):** `app.getContext()` - app-scoped key-value
   store for the whole app (bootstrap, services, any code with `app`). Use
   `get<T>(key)`, `set<T>(key, value)`, `has(key)`, `delete(key)`, `keys()`.
-  Namespace keys (e.g. `app.config`, `rpc.artifact`, `openapi.spec`). Use for pipeline/config or
-  shared data that outlives a request. **Not** Hono request context: that is
-  per-request and injected via `@Ctx()` (request, response, env, request-scoped
-  variables).
+  Namespace keys (e.g. `app.config`, `rpc.artifact`, `openapi.spec`). Use for
+  pipeline/config or shared data that outlives a request. **Not** Hono request
+  context: that is per-request and injected via `@Ctx()` (request, response,
+  env, request-scoped variables).
 
 ## Modules and DI
 
-- **Module:** `@Module({ controllers?, services?, imports? })` — list
+- **Module:** `@Module({ controllers?, services?, imports? })` - list
   controller/service classes and imported modules.
-- **Service:** `@Service()` — marks a class as injectable singleton; inject via
+- **Service:** `@Service()` - marks a class as injectable singleton; inject via
   constructor in controllers or other services.
 
 ```typescript
@@ -100,10 +100,10 @@ class UsersModule {}
 
 ## Controllers and routes
 
-- **Controller:** `@Controller(route?)` — base path for all handlers in the
+- **Controller:** `@Controller(route?)` - base path for all handlers in the
   class.
 - **HTTP methods:** `@Get(path?)`, `@Post(path?)`, `@Put(path?)`,
-  `@Delete(path?)`, `@Patch(path?)`, `@Options(path?)`, `@All(path?)` — path is
+  `@Delete(path?)`, `@Patch(path?)`, `@Options(path?)`, `@All(path?)` - path is
   optional (default `''`).
 
 **Parameter decorators:** use on handler arguments.
@@ -140,10 +140,10 @@ class UsersController {
 
 Apply at class or method level:
 
-- **UseMiddleware(...middleware)** — runs before the handler.
-- **UseGuards(...guards)** — determines if the request is allowed.
-- **UsePipes(...pipes)** — transform input before the handler.
-- **UseFilters(...filters)** — handle exceptions for the controller/method.
+- **UseMiddleware(...middleware)** - runs before the handler.
+- **UseGuards(...guards)** - determines if the request is allowed.
+- **UsePipes(...pipes)** - transform input before the handler.
+- **UseFilters(...filters)** - handle exceptions for the controller/method.
 
 Same pattern as Nest: class-level applies to all methods; method-level overrides
 or adds.
@@ -156,14 +156,13 @@ or adds.
 bun add @honestjs/rpc-plugin
 ```
 
-- **Typed RPC client** — analyzes HonestJS controllers and generates a type-safe
+- **Typed RPC client** - analyzes HonestJS controllers and generates a type-safe
   TypeScript client. Register: `plugins: [RPCPlugin]` or
   `plugins: [new RPCPlugin(options)]`.
 - **Options:** `controllerPattern` (glob for controller files), `tsConfigPath`,
   `outputDir` (default `./generated/rpc`), `generateOnInit` (default `true`),
-  `generators` (optional array of custom generators).
-  Use `controllerPattern` if controllers live outside the default
-  `src/modules/*/*.controller.ts`.
+  `generators` (optional array of custom generators). Use `controllerPattern` if
+  controllers live outside the default `src/modules/*/*.controller.ts`.
 - **Generators:** when `generators` is omitted, plugin uses built-in
   `TypeScriptClientGenerator`; when defined, only provided generators run.
 - **Generated client:** `ApiClient` with controller-namespaced methods; call
@@ -175,7 +174,7 @@ bun add @honestjs/rpc-plugin
   `@Param()`, `@Query()` with typed DTOs/interfaces for best client inference.
 - **OpenAPI/Swagger:** RPC plugin does not generate OpenAPI specs. It publishes
   routes/schemas artifact to app context (default key: `rpc.artifact`). API Docs
-  plugin defaults to that key — use `new ApiDocsPlugin()` with RPC, or pass
+  plugin defaults to that key - use `new ApiDocsPlugin()` with RPC, or pass
   `artifact` for a custom key or direct `{ routes, schemas }` object.
 
 ### @honestjs/api-docs-plugin
@@ -184,7 +183,7 @@ bun add @honestjs/rpc-plugin
 bun add @honestjs/api-docs-plugin
 ```
 
-- **OpenAPI + Swagger UI** — generates OpenAPI spec from an artifact and serves
+- **OpenAPI + Swagger UI** - generates OpenAPI spec from an artifact and serves
   JSON + Swagger UI. Register: `plugins: [new ApiDocsPlugin()]` or
   `plugins: [new ApiDocsPlugin(options)]`. With RPC, `artifact` defaults to
   `'rpc.artifact'` so no options are needed.
@@ -195,9 +194,9 @@ bun add @honestjs/api-docs-plugin
 - **Options:** `title`, `version`, `description`, `servers` (OpenAPI metadata);
   `openApiRoute` (default `/openapi.json`), `uiRoute` (default `/docs`),
   `uiTitle` (default `'API Docs'`), `reloadOnRequest` (default `false`).
-- **Programmatic:** `fromArtifactSync(artifact, options)` and `write(spec, path)`
-  for generating spec files; types: `OpenApiArtifactInput`, `OpenApiDocument`,
-  `OpenApiGenerationOptions`.
+- **Programmatic:** `fromArtifactSync(artifact, options)` and
+  `write(spec, path)` for generating spec files; types: `OpenApiArtifactInput`,
+  `OpenApiDocument`, `OpenApiGenerationOptions`.
 
 ### @honestjs/middleware
 
@@ -216,7 +215,7 @@ bun add @honestjs/middleware
 bun add @honestjs/pipes
 ```
 
-- **PrimitiveValidationPipe** — validates and transforms primitive types
+- **PrimitiveValidationPipe** - validates and transforms primitive types
   (String, Number, Boolean) on route params/query/body. Register globally:
   `components: { pipes: [new PrimitiveValidationPipe()] }`.
 
@@ -226,7 +225,7 @@ bun add @honestjs/pipes
 bun add @honestjs/class-validator-pipe
 ```
 
-- **ClassValidatorPipe** — validates and transforms DTOs with class-validator
+- **ClassValidatorPipe** - validates and transforms DTOs with class-validator
   and class-transformer. Define DTOs with decorators (`@IsString()`,
   `@IsEmail()`, `@MinLength()`, `@IsOptional()`, etc.), then register:
   `components: { pipes: [new ClassValidatorPipe()] }`. Use `@Body()` with the
@@ -241,7 +240,7 @@ bun add http-essentials
 - **Status/phrase:** `HttpStatus.OK`, `HttpPhrase.NOT_FOUND`,
   `httpPhraseByStatus`, `httpStatusByPhrase`.
 - **Exceptions:** `NotFoundException`, `BadRequestException`,
-  `UnauthorizedException`, etc. — throw in handlers or use in filters; include
+  `UnauthorizedException`, etc. - throw in handlers or use in filters; include
   default messages and custom message arg.
 
 Use in guards and exception filters for consistent HTTP responses.
