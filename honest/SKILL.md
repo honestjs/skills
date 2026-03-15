@@ -1,6 +1,6 @@
 ---
 name: honest
-description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding, Application.create, decorators, routing, DI, application context (registry), plugins, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
+description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding (new, list, info, generate with --force), Application.create, decorators, routing, DI, application context (registry), plugins, MVC/Hono JSX views, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
 ---
 
 # Honest Skill
@@ -52,7 +52,7 @@ Always import `reflect-metadata` once before any Honest decorators. Export the
 - **Generate:** `honestjs generate <schematic> <name>` (alias `g`) - schematics:
   `controller`|`c`, `service`|`s`, `module`|`m`, `view`|`v`, `middleware`|`c-m`,
   `guard`|`c-g`, `filter`|`c-f`, `pipe`|`c-p`. Options: `-p|--path`, `--flat`,
-  `--skip-import`, `--export`
+  `--force` (overwrite existing files), `--skip-import`, `--export`
 
 Prefer `honestjs new` for new apps and `honestjs generate` for adding
 controllers, services, modules, guards, pipes, or filters.
@@ -69,9 +69,12 @@ controllers, services, modules, guards, pipes, or filters.
   routes.
 - **Plugins:** `plugins?: PluginEntry[]` - each entry can be a plain plugin or
   `{ plugin, preProcessors?, postProcessors? }`. Processors receive
-  `(app, hono, ctx)` (ctx = app context). Order: preProcessors →
-  `beforeModulesRegistered`; `afterModulesRegistered` → postProcessors.
+  `(app, hono, ctx)` where `ctx` is `app.getContext()` (application context).
+  Order: preProcessors → `beforeModulesRegistered`; `afterModulesRegistered` →
+  postProcessors.
 - **Custom handlers:** `onError?`, `notFound?` on options.
+- **Debug/strict:** `debug: { routes?, plugins? }`, `strict: { requireRoutes? }`,
+  `deprecations: { printPreV1Warning? }` - see [Configuration](https://honestjs.dev/docs/configuration).
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
 - **Startup validations:** duplicate method+path routes fail at registration;
@@ -267,10 +270,18 @@ bun add http-essentials
 
 Use in guards and exception filters for consistent HTTP responses.
 
+## MVC and views
+
+HonestJS supports server-side rendered views with Hono JSX. Use the `mvc`
+template (`honestjs new my-app -t mvc`) for full-stack apps. Views use
+`@View()`, `@Page()`, `Layout`, and `JsxRendererMiddleware` - see
+[MVC docs](https://honestjs.dev/docs/features/mvc).
+
 ## Guidelines
 
 - Use `honestjs new` for new projects; use `honestjs generate` for controllers,
-  services, modules, guards, pipes, filters.
+  services, modules, guards, pipes, filters. Use `--force` to overwrite existing
+  files.
 - Always `import 'reflect-metadata'` once at entry before any Honest code.
 - Export `hono` from the entry used by your server (Worker, Node, Bun).
 - Honest is pre-v1: API may change; avoid relying on undocumented behavior.
