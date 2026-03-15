@@ -171,8 +171,12 @@ bun add @honestjs/rpc-plugin
   `plugins: [new RPCPlugin(options)]`.
 - **Options:** `controllerPattern` (glob for controller files), `tsConfigPath`,
   `outputDir` (default `./generated/rpc`), `generateOnInit` (default `true`),
-  `generators` (optional array of custom generators). Use `controllerPattern` if
-  controllers live outside the default `src/modules/*/*.controller.ts`.
+  `generators` (optional array of custom generators), `mode`
+  (`strict`/`best-effort`), `logLevel`
+  (`silent`/`error`/`warn`/`info`/`debug`), `customClassMatcher`
+  (optional controller discovery override), `failOnSchemaError`,
+  `failOnRouteAnalysisWarning`. Use `controllerPattern` if controllers live
+  outside the default `src/modules/*/*.controller.ts`.
 - **Generators:** when `generators` is omitted, plugin uses built-in
   `TypeScriptClientGenerator`; when defined, only provided generators run.
 - **Generated client:** `ApiClient` with controller-namespaced methods; call
@@ -180,12 +184,17 @@ bun add @honestjs/rpc-plugin
   `new ApiClient(baseUrl, { fetchFn? })` for custom fetch (testing, retries,
   interceptors). `setDefaultHeaders()` for auth. Errors via `ApiError`.
 - **Manual generation:** `generateOnInit: false` then
-  `await rpcPlugin.analyze()` when needed. Controllers should use `@Body()`,
-  `@Param()`, `@Query()` with typed DTOs/interfaces for best client inference.
+  `await rpcPlugin.analyze({ force?: boolean, dryRun?: boolean })` when needed.
+  `dryRun: true` runs analysis without generating client files. Controllers
+  should use `@Body()`, `@Param()`, `@Query()` with typed DTOs/interfaces for
+  best client inference.
 - **OpenAPI/Swagger:** RPC plugin does not generate OpenAPI specs. It publishes
-  routes/schemas artifact to app context (default key: `rpc.artifact`). API Docs
-  plugin defaults to that key - use `new ApiDocsPlugin()` with RPC, or pass
-  `artifact` for a custom key or direct `{ routes, schemas }` object.
+  routes/schemas artifact to app context (default key: `rpc.artifact`) with
+  `artifactVersion: "1"`. API Docs plugin defaults to that key - use
+  `new ApiDocsPlugin()` with RPC, or pass `artifact` for a custom key or direct
+  `{ artifactVersion?, routes, schemas }` object.
+- **Diagnostics output:** plugin writes `rpc-diagnostics.json` in output dir
+  (mode, cache status, warnings, counts).
 
 ### @honestjs/api-docs-plugin
 
@@ -203,10 +212,13 @@ bun add @honestjs/api-docs-plugin
   ApiDocsPlugin in the plugins array when using a context key.
 - **Options:** `title`, `version`, `description`, `servers` (OpenAPI metadata);
   `openApiRoute` (default `/openapi.json`), `uiRoute` (default `/docs`),
-  `uiTitle` (default `'API Docs'`), `reloadOnRequest` (default `false`).
+  `uiTitle` (default `'API Docs'`), `reloadOnRequest` (default `false`),
+  `onOpenApiRequest` and `onUiRequest` (optional auth hook points).
 - **Programmatic:** `fromArtifactSync(artifact, options)` and
   `write(spec, path)` for generating spec files; types: `OpenApiArtifactInput`,
   `OpenApiDocument`, `OpenApiGenerationOptions`.
+- **Artifact contract:** when `artifactVersion` exists, supported value is `"1"`;
+  unsupported versions fail with explicit error.
 
 ### @honestjs/middleware
 
