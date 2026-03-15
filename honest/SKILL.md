@@ -74,6 +74,8 @@ controllers, services, modules, guards, pipes, or filters.
 - **Custom handlers:** `onError?`, `notFound?` on options.
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
+- **Startup validations:** duplicate method+path routes fail at registration;
+  strict mode can fail startup when zero routes are registered.
 - **Application context (registry):** `app.getContext()` - app-scoped key-value
   store for the whole app (bootstrap, services, any code with `app`). Use
   `get<T>(key)`, `set<T>(key, value)`, `has(key)`, `delete(key)`, `keys()`.
@@ -88,6 +90,7 @@ controllers, services, modules, guards, pipes, or filters.
   controller/service classes and imported modules.
 - **Service:** `@Service()` - marks a class as injectable singleton; inject via
   constructor in controllers or other services.
+- **Current DI shape:** constructor injection with concrete class types.
 
 ```typescript
 @Module({
@@ -135,6 +138,13 @@ class UsersController {
   }
 }
 ```
+
+Notes:
+
+- `@Body()` is safe to use multiple times in the same handler (request JSON is
+  reused per request).
+- Returning a native `Response` from a handler is supported and passed through
+  directly.
 
 ## Pipeline
 
