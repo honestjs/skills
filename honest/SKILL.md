@@ -45,12 +45,12 @@ Always import `reflect-metadata` once before any Honest decorators. Export the
 
 ## CLI
 
-- **New project:** `honestjs new <project-name>` - options: `-t|--template` (name
-  or local path: `./path`, `~/path`), `-p|--package-manager`, `--typescript`,
-  `--eslint`, `--prettier`, `--docker`, `--git`, `--install`, `-y|--yes`,
-  `--offline`, `--refresh-templates`
-- **List templates:** `honestjs list` - `-j|--json`, `-c|--category`, `-t|--tag`,
-  `-l|--local <path>` (list from local repo or single template)
+- **New project:** `honestjs new <project-name>` - options: `-t|--template`
+  (name or local path: `./path`, `~/path`), `-p|--package-manager`,
+  `--typescript`, `--eslint`, `--prettier`, `--docker`, `--git`, `--install`,
+  `-y|--yes`, `--offline`, `--refresh-templates`
+- **List templates:** `honestjs list` - `-j|--json`, `-c|--category`,
+  `-t|--tag`, `-l|--local <path>` (list from local repo or single template)
 - **Info:** `honestjs info` - `-l|--local <path>` (show templates from local)
 - **Generate:** `honestjs generate <schematic> <name>` (alias `g`) - schematics:
   `controller`|`c`, `service`|`s`, `module`|`m`, `view`|`v`, `middleware`|`c-m`,
@@ -62,8 +62,10 @@ controllers, services, modules, guards, pipes, or filters.
 
 **Local templates:** Use a local path for `--template` to scaffold from a local
 templates repo (directory with `templates.json`) or single template (directory
-with `template.json` + `files/`). Examples: `honestjs new my-app -t ./templates`,
-`honestjs new my-app -t ./templates/api-starter`, `honestjs list --local ./templates`.
+with `template.json` + `files/`). Examples:
+`honestjs new my-app -t ./templates`,
+`honestjs new my-app -t ./templates/api-starter`,
+`honestjs list --local ./templates`.
 
 ## Application and routing
 
@@ -81,8 +83,9 @@ with `template.json` + `files/`). Examples: `honestjs new my-app -t ./templates`
   Order: preProcessors → `beforeModulesRegistered`; `afterModulesRegistered` →
   postProcessors.
 - **Custom handlers:** `onError?`, `notFound?` on options.
-- **Debug/strict:** `debug: { routes?, plugins? }`, `strict: { requireRoutes? }`,
-  `deprecations: { printPreV1Warning? }` - see [Configuration](https://honestjs.dev/docs/configuration).
+- **Debug/strict:** `debug: { routes?, plugins? }`,
+  `strict: { requireRoutes? }`, `deprecations: { printPreV1Warning? }` - see
+  [Configuration](https://honestjs.dev/docs/configuration).
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
   `app.getRoutes()` for route info.
 - **Startup validations:** duplicate method+path routes fail at registration;
@@ -183,11 +186,10 @@ bun add @honestjs/rpc-plugin
 - **Options:** `controllerPattern` (glob for controller files), `tsConfigPath`,
   `outputDir` (default `./generated/rpc`), `generateOnInit` (default `true`),
   `generators` (optional array of custom generators), `mode`
-  (`strict`/`best-effort`), `logLevel`
-  (`silent`/`error`/`warn`/`info`/`debug`), `customClassMatcher`
-  (optional controller discovery override), `failOnSchemaError`,
-  `failOnRouteAnalysisWarning`. Use `controllerPattern` if controllers live
-  outside the default `src/modules/*/*.controller.ts`.
+  (`strict`/`best-effort`), `logLevel` (`silent`/`error`/`warn`/`info`/`debug`),
+  `customClassMatcher` (optional controller discovery override),
+  `failOnSchemaError`, `failOnRouteAnalysisWarning`. Use `controllerPattern` if
+  controllers live outside the default `src/modules/*/*.controller.ts`.
 - **Generators:** when `generators` is omitted, plugin uses built-in
   `TypeScriptClientGenerator`; when defined, only provided generators run.
 - **Generated client:** `ApiClient` with controller-namespaced methods; call
@@ -228,8 +230,8 @@ bun add @honestjs/api-docs-plugin
 - **Programmatic:** `fromArtifactSync(artifact, options)` and
   `write(spec, path)` for generating spec files; types: `OpenApiArtifactInput`,
   `OpenApiDocument`, `OpenApiGenerationOptions`.
-- **Artifact contract:** when `artifactVersion` exists, supported value is `"1"`;
-  unsupported versions fail with explicit error.
+- **Artifact contract:** when `artifactVersion` exists, supported value is
+  `"1"`; unsupported versions fail with explicit error.
 
 ### @honestjs/middleware
 
@@ -282,8 +284,8 @@ Use in guards and exception filters for consistent HTTP responses.
 
 HonestJS supports server-side rendered views with Hono JSX. Use the `mvc`
 template (`honestjs new my-app -t mvc`) for full-stack apps. Other templates:
-`barebone`, `blank`, `api-starter`. Views use
-`@View()`, `@Page()`, `Layout`, and `JsxRendererMiddleware` - see
+`barebone`, `blank`, `api-starter`. Views use `@View()`, `@Page()`, `Layout`,
+and `JsxRendererMiddleware` - see
 [MVC docs](https://honestjs.dev/docs/features/mvc).
 
 ## Guidelines
