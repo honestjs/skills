@@ -1,7 +1,6 @@
 ---
 name: honest
-description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding (new, list, info, generate with --force; local and external
-templates), Application.create, decorators, routing, DI, application context (registry), plugins, MVC/Hono JSX views, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
+description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding (new, list, info, generate with --force; local and external templates), Application.create, decorators, routing, DI, application context (registry), plugins, MVC/Hono JSX views, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
 ---
 
 # Honest Skill
