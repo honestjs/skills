@@ -1,6 +1,7 @@
 ---
 name: honest
-description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding (new, list, info, generate with --force), Application.create, decorators, routing, DI, application context (registry), plugins, MVC/Hono JSX views, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
+description: Build and maintain Honest.js (HonestJS) applications - a Nest-style framework on Hono. Use when the user works with Honest, HonestJS, honestjs, or when building TypeScript web apps with controllers, modules, dependency injection, guards, pipes, or filters on Hono. Covers CLI scaffolding (new, list, info, generate with --force; local and external
+templates), Application.create, decorators, routing, DI, application context (registry), plugins, MVC/Hono JSX views, @honestjs/middleware, @honestjs/pipes, @honestjs/class-validator-pipe, @honestjs/rpc-plugin, @honestjs/api-docs-plugin, and http-essentials.
 ---
 
 # Honest Skill
@@ -44,11 +45,13 @@ Always import `reflect-metadata` once before any Honest decorators. Export the
 
 ## CLI
 
-- **New project:** `honestjs new <project-name>` - options: `-t|--template`,
-  `-p|--package-manager`, `--typescript`, `--eslint`, `--prettier`, `--docker`,
-  `--git`, `--install`, `-y|--yes`
-- **List templates:** `honestjs list` - `-j|--json`, `-c|--category`, `-t|--tag`
-- **Info:** `honestjs info`
+- **New project:** `honestjs new <project-name>` - options: `-t|--template` (name
+  or local path: `./path`, `~/path`), `-p|--package-manager`, `--typescript`,
+  `--eslint`, `--prettier`, `--docker`, `--git`, `--install`, `-y|--yes`,
+  `--offline`, `--refresh-templates`
+- **List templates:** `honestjs list` - `-j|--json`, `-c|--category`, `-t|--tag`,
+  `-l|--local <path>` (list from local repo or single template)
+- **Info:** `honestjs info` - `-l|--local <path>` (show templates from local)
 - **Generate:** `honestjs generate <schematic> <name>` (alias `g`) - schematics:
   `controller`|`c`, `service`|`s`, `module`|`m`, `view`|`v`, `middleware`|`c-m`,
   `guard`|`c-g`, `filter`|`c-f`, `pipe`|`c-p`. Options: `-p|--path`, `--flat`,
@@ -56,6 +59,11 @@ Always import `reflect-metadata` once before any Honest decorators. Export the
 
 Prefer `honestjs new` for new apps and `honestjs generate` for adding
 controllers, services, modules, guards, pipes, or filters.
+
+**Local templates:** Use a local path for `--template` to scaffold from a local
+templates repo (directory with `templates.json`) or single template (directory
+with `template.json` + `files/`). Examples: `honestjs new my-app -t ./templates`,
+`honestjs new my-app -t ./templates/api-starter`, `honestjs list --local ./templates`.
 
 ## Application and routing
 
@@ -273,7 +281,8 @@ Use in guards and exception filters for consistent HTTP responses.
 ## MVC and views
 
 HonestJS supports server-side rendered views with Hono JSX. Use the `mvc`
-template (`honestjs new my-app -t mvc`) for full-stack apps. Views use
+template (`honestjs new my-app -t mvc`) for full-stack apps. Other templates:
+`barebone`, `blank`, `api-starter`. Views use
 `@View()`, `@Page()`, `Layout`, and `JsxRendererMiddleware` - see
 [MVC docs](https://honestjs.dev/docs/features/mvc).
 
