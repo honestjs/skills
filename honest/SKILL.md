@@ -63,7 +63,7 @@ controllers, services, modules, guards, pipes, or filters.
 templates repo (directory with `templates.json`) or single template (directory
 with `template.json` + `files/`). Examples:
 `honestjs new my-app -t ./templates`,
-`honestjs new my-app -t ./templates/api-starter`,
+`honestjs new my-app -t ./templates/barebone`,
 `honestjs list --local ./templates`.
 
 ## Application and routing
@@ -283,8 +283,9 @@ Use in guards and exception filters for consistent HTTP responses.
 
 HonestJS supports server-side rendered views with Hono JSX. Use the `mvc`
 template (`honestjs new my-app -t mvc`) for full-stack apps. Other templates:
-`barebone`, `blank`, `api-starter`. Views use `@View()`, `@Page()`, `Layout`,
-and `JsxRendererMiddleware` - see
+`barebone`, `blank`. Use barebone and enable RPC / API docs options for OpenAPI
+and type-safe client generation. Views use `@View()`, `@Page()`, `Layout`, and
+`JsxRendererMiddleware` - see
 [MVC docs](https://honestjs.dev/docs/features/mvc).
 
 ## Guidelines
