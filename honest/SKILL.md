@@ -28,15 +28,15 @@ bun add honestjs hono reflect-metadata
 Bootstrap (entry file):
 
 ```typescript
-import "reflect-metadata";
-import { Application } from "honestjs";
-import { AppModule } from "./app.module";
+import 'reflect-metadata'
+import { Application } from 'honestjs'
+import { AppModule } from './app.module'
 
 const { app, hono } = await Application.create(AppModule, {
-  routing: { prefix: "api", version: 1 },
-});
+	routing: { prefix: 'api', version: 1 },
+})
 
-export default hono;
+export default hono
 ```
 
 Always import `reflect-metadata` once before any Honest decorators. Export the
@@ -72,7 +72,7 @@ with `template.json` + `files/`). Examples:
   `{ app, hono }`.
 - **Routing:**
   `routing: { prefix?: string, version?: number | VERSION_NEUTRAL | number[] }`
-  - e.g. `prefix: 'api'`, `version: 1` → `/api/v1/...`.
+    - e.g. `prefix: 'api'`, `version: 1` → `/api/v1/...`.
 - **Global components:**
   `components: { middleware?, guards?, pipes?, filters? }` - applied to all
   routes.
@@ -82,7 +82,7 @@ with `template.json` + `files/`). Examples:
   Order: preProcessors → `beforeModulesRegistered`; `afterModulesRegistered` →
   postProcessors.
 - **Custom handlers:** `onError?`, `notFound?` on options.
-- **Debug/strict:** `debug: { routes?, plugins? }`,
+- **Debug/strict:** `debug: { routes?, plugins?, pipeline?, di?, startup? }`,
   `strict: { requireRoutes? }`, `deprecations: { printPreV1Warning? }` - see
   [Configuration](https://honestjs.dev/docs/configuration).
 - **Hono access:** `app.getApp()` for the underlying Hono instance;
@@ -107,9 +107,9 @@ with `template.json` + `files/`). Examples:
 
 ```typescript
 @Module({
-  controllers: [UsersController],
-  services: [UsersService],
-  imports: [OtherModule],
+	controllers: [UsersController],
+	services: [UsersService],
+	imports: [OtherModule],
 })
 class UsersModule {}
 ```
@@ -138,17 +138,17 @@ class UsersModule {}
 Example:
 
 ```typescript
-@Controller("users")
+@Controller('users')
 class UsersController {
-  @Get(":id")
-  getOne(@Param("id") id: string, @Ctx() ctx: Context) {
-    return ctx.json({ id });
-  }
+	@Get(':id')
+	getOne(@Param('id') id: string, @Ctx() ctx: Context) {
+		return ctx.json({ id })
+	}
 
-  @Post()
-  async create(@Body() body: CreateUserDto) {
-    return { created: body };
-  }
+	@Post()
+	async create(@Body() body: CreateUserDto) {
+		return { created: body }
+	}
 }
 ```
 
