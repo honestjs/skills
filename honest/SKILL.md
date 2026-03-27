@@ -77,10 +77,10 @@ with `template.json` + `files/`). Examples:
   `components: { middleware?, guards?, pipes?, filters? }` - applied to all
   routes.
 - **Plugins:** `plugins?: PluginEntry[]` - each entry can be a plain plugin or
-  `{ plugin, preProcessors?, postProcessors? }`. Processors receive
+  `{ plugin, name?, preProcessors?, postProcessors? }`. Processors receive
   `(app, hono, ctx)` where `ctx` is `app.getContext()` (application context).
   Order: preProcessors → `beforeModulesRegistered`; `afterModulesRegistered` →
-  postProcessors.
+  postProcessors. Multiple plugins run in `plugins` array order.
 - **Custom handlers:** `onError?`, `notFound?` on options.
 - **Debug/strict:** `debug: { routes?, plugins?, pipeline?, di?, startup? }`,
   `strict: { requireRoutes? }`, `deprecations: { printPreV1Warning? }` - see
